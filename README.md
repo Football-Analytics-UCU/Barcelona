@@ -1,6 +1,15 @@
 # Barcelona
 
 
+## Project Goals
+
+1. (TBD)
+
+
+## Contributors
+
+1. (TBD)
+
 ## Football Data from Transfermarkt
 Football (Soccer) data scraped from Transfermarkt website
 
@@ -102,5 +111,3 @@ Football (Soccer) data scraped from Transfermarkt website
 **ideas**
 - Barcelona over other clubs in Europe and Spanish league (how much foreigners allowed by "club policy")
 - stedium attendance percentage during the season (we have data for that)
-
-
