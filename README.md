@@ -10,6 +10,10 @@
 
 1. (TBD)
 
+## Project Structure 
+
+(TBD)
+
 ## Football Data from Transfermarkt
 Football (Soccer) data scraped from Transfermarkt website
 
