@@ -1,0 +1,13 @@
+names:
+- Football
+- Player
+nc: 2
+roboflow:
+  license: CC BY 4.0
+  project: football_project-blbhw
+  url: https://universe.roboflow.com/footballspace/football_project-blbhw/dataset/3
+  version: 3
+  workspace: footballspace
+test: ../test/images
+train: Football_project-3/train/images
+val: Football_project-3/valid/images
