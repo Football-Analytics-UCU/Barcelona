@@ -1,0 +1,13 @@
+train: ../yolov7/Football_project-5/train/images
+val: ../yolov7/Football_project-5/valid/images
+test: ../yolov7/Football_project-5/test/images
+
+nc: 4
+names: ['Barca', 'Football', 'Opponent', 'Referee']
+
+roboflow:
+  workspace: footballspace
+  project: football_project-blbhw
+  version: 5
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/footballspace/football_project-blbhw/dataset/5

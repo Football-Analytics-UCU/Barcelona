@@ -1,5 +1,6 @@
 import argparse
 import time
+import math
 from pathlib import Path
 
 import cv2
@@ -25,7 +26,13 @@ data_deque = {}
 
 ##########################################################################################
 def xyxy_to_xywh(*xyxy):
-    """" Calculates the relative bounding box from absolute pixel values. """
+    """" Calculates the relative bounding box from absolute pixel values.
+         Вычисляет относительную ограничивающую рамку на основе абсолютных значений пикселей.
+
+         Преобразуем вывод ограничивающей рамки, полученный от YOLOv7, в формат,
+        совместимый с DeepSort. Используя эту функцию, мы преобразуем наши координаты x и любые координаты y 
+        в координаты центра, которые представляют собой x_c и y_c, и возвращаем ширину и высота ограничивающих рамок"""
+
     bbox_left = min([xyxy[0].item(), xyxy[2].item()])
     bbox_top = min([xyxy[1].item(), xyxy[3].item()])
     bbox_w = abs(xyxy[0].item() - xyxy[2].item())
@@ -37,6 +44,10 @@ def xyxy_to_xywh(*xyxy):
     return x_c, y_c, w, h
 
 def xyxy_to_tlwh(bbox_xyxy):
+
+    """Преобразование координат xy в другой формат, но в этом случае мы ищем только Top, Left, а также ширину и высоту.
+    Эта функция возвращает верхние левые координаты вместе с ограничивающими рамками ширины и высоты."""
+
     tlwh_bboxs = []
     for i, box in enumerate(bbox_xyxy):
         x1, y1, x2, y2 = [int(i) for i in box]
@@ -53,10 +64,6 @@ def compute_color_for_labels(label):
     Simple function that adds fixed color depending on the class
     """
 
-    # попробовать разделить метку player на белый бокс и синий бокс
-
-
-
     if label == 0: # Player
         color = (85,45,255)
     elif label == 1: # Ball
@@ -66,6 +73,8 @@ def compute_color_for_labels(label):
     return tuple(color)
 
 def draw_border(img, pt1, pt2, color, thickness, r, d):
+    """ Создается прямоугольник с закругленными углами над ограничивающей рамкой,
+        в который затем помещу текст метки. """
     x1,y1 = pt1
     x2,y2 = pt2
     # Top left
@@ -96,6 +105,11 @@ def draw_border(img, pt1, pt2, color, thickness, r, d):
     return img
 
 def UI_box(x, img, color=None, label=None, line_thickness=None):
+    """ В функции Ui_box мы анализируем cv2.rectangle, чтобы создать прямоугольник вокруг обнаруженного объекта.
+        Мы также вызываем вышеуказанную функцию draw_border, чтобы создать скругленный прямоугольник. Кроме того,
+        мы используем cv2.text, чтобы добавить метку, например, какой это объект, например, автомобиль, автобус, в
+        прямоугольник с закругленными углами. cv2.text будет и метку в прямоугольник с закругленными углами, который
+        мы создали с помощью draw_border."""
     # Plots one bounding box on image img
     tl = line_thickness or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1  # line/font thickness
     color = color or [random.randint(0, 255) for _ in range(3)]
@@ -141,9 +155,10 @@ def draw_boxes(img, bbox, names,object_id, identities=None, offset=(0, 0)):
         color = compute_color_for_labels(object_id[i])
         obj_name = names[object_id[i]]
         if obj_name == "Football":
-          label = '%s' % (obj_name)
-        elif obj_name == "Player":
-          label = '{}{:d}'.format("", id) + ":"+ '%s' % (obj_name)
+            label = '%s' % (obj_name)
+        elif obj_name == "Barca" or obj_name == "Opponent" or obj_name == "Referee":
+             label = obj_name
+
           # add center to buffer
         data_deque[id].appendleft(center)
         UI_box(box, img, label=label, color=color, line_thickness=2)
@@ -157,12 +172,19 @@ def draw_boxes(img, bbox, names,object_id, identities=None, offset=(0, 0)):
             # draw trails
             cv2.line(img, data_deque[id][i - 1], data_deque[id][i], color, thickness)
     return img
+
+
 def load_classes(path):
     # Loads *.names file at 'path'
     with open(path, 'r') as f:
         names = f.read().split('\n')
     return list(filter(None, names)) 
 def detect(save_img=False):
+    ball_positions = deque(maxlen=5)  # Store the last 5 positions of the ball || Yurii
+    ball_speeds = deque(maxlen=5)     # Store the last 5 speeds of the ball || Yurii
+    predicted_ball_pos = None         # Store the predicted position of the ball || Yurii
+
+
     names, source, weights, view_img, save_txt, imgsz, trace = opt.names, opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace 
     save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
     webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
@@ -221,6 +243,10 @@ def detect(save_img=False):
     old_img_w = old_img_h = imgsz
     old_img_b = 1
 
+
+    possession_count = {'Barca': 0, 'Opponent': 0} # For counting the number of possessions for each team || Yurii
+    last_possession = None
+
     t0 = time.time()
     for path, img, im0s, vid_cap in dataset:
         img = torch.from_numpy(img).to(device)
@@ -250,7 +276,10 @@ def detect(save_img=False):
         # Apply Classifier
         if classify:
             pred = apply_classifier(pred, modelc, img, im0s)
+        
 
+        previous_posession = None # previous owner of the ball || Yurii
+        counter = 0  # Counter for how many frames the ball has been predicted for || Yurii
         # Process detections
         for i, det in enumerate(pred):  # detections per image
             if webcam:  # batch_size >= 1
@@ -292,13 +321,110 @@ def detect(save_img=False):
                 xywhs = torch.Tensor(xywh_bboxs)
                 confss = torch.Tensor(confs)
                 
-                outputs = deepsort.update(xywhs, confss, oids, im0)
-                if len(outputs) > 0:
+                outputs = deepsort.update(xywhs, confss, oids, im0)    #**** We have a prediction from deepsort
+                if len(outputs) > 0:                                   #**** We start to manipulate with them
                     bbox_xyxy = outputs[:, :4]
                     identities = outputs[:, -2]
                     object_id = outputs[:, -1]
-
                     draw_boxes(im0, bbox_xyxy, names, object_id,identities)
+
+                    #**** Try to find the closest player to the ball and draw it
+                    football_pos = None
+                    player_positions = []  #**** Will hold tuples of (x_center, y_center, identity, 'barca'/'opponent')
+                    for output, obj_id in zip(outputs, object_id):   #**** Calculate the positions of all players and the football (centre)
+                        x1, y1, x2, y2, identity = output[:5]
+                        x_center = (x1 + x2) / 2
+                        y_center = (y1 + y2) / 2
+                        label = names[int(obj_id)]
+                        
+                        if label == 'Football':
+                            football_pos = (x_center, y_center)
+                        elif label == 'Barca' or label == 'Opponent':
+                            player_positions.append((x_center, y_center, identity, label))
+                    
+                    if football_pos:
+                        if ball_positions:
+                            #**** Calculate speed as the difference in position between frames || Yurii
+                            last_pos = ball_positions[-1]
+                            speed = ((football_pos[0] - last_pos[0]), (football_pos[1] - last_pos[1]))
+                            ball_speeds.append(speed)
+                        ball_positions.append(football_pos)
+                        predicted_ball_pos = None  #**** Reset predicted position when the real ball is detected
+                        counter = 0  #**** Reset counter when the real ball is detected
+                    elif ball_positions and ball_speeds:
+                        # Predict the next position of the ball based on the average speed of the last 5 frames || Yurii
+                        avg_speed = tuple(sum(x) / len(ball_speeds) for x in zip(*ball_speeds))
+                        last_pos = ball_positions[-1]
+                        predicted_ball_pos = (last_pos[0] + avg_speed[0], last_pos[1] + avg_speed[1])
+                        ball_positions.append(predicted_ball_pos)  #**** Update the positions list with the predicted position
+                        if counter < 60:
+                            football_pos = predicted_ball_pos  #**** Use the predicted position for rest of the code
+                            counter += 1
+
+                    if predicted_ball_pos:
+                        #**** Draw predicted bounding box (use a dashed line)
+                        cv2.rectangle(im0, (int(predicted_ball_pos[0] - 10), int(predicted_ball_pos[1] - 10)), (int(predicted_ball_pos[0] + 10), int(predicted_ball_pos[1] + 10)), (0, 255, 255), 1, lineType=cv2.LINE_AA)
+
+                        #**** Draw direction arrow
+                        if ball_speeds:
+                            start_point = predicted_ball_pos
+                            end_point = (predicted_ball_pos[0] + avg_speed[0] * 5, predicted_ball_pos[1] + avg_speed[1] * 5)  #**** scale the speed for visibility
+                            cv2.arrowedLine(im0, (int(start_point[0]), int(start_point[1])), (int(end_point[0]), int(end_point[1])), (0, 255, 255), 2, tipLength=0.3)
+
+                    #**** If football is detected in this frame (it is not always detected)
+                    if football_pos:
+                        #**** Find the closest player to the football
+                        min_distance = float('inf')
+                        closest_player_pos = None
+                        for player_pos in player_positions:
+                            distance = math.sqrt((player_pos[0] - football_pos[0]) ** 2 + (player_pos[1] - football_pos[1]) ** 2)
+                            if distance < min_distance:
+                                if distance < 100:  #**** Only consider it a possession if the player is close to the football
+                                    min_distance = distance
+                                    closest_player_pos = player_pos
+                        
+
+                #**** If football is detected in this frame (it is not always detected) and closest player found
+                    if football_pos:
+                        if closest_player_pos:
+                            current_possession = closest_player_pos[3]  #**** 'Barca' or 'Opponent'
+                        elif last_possession:
+                            current_possession = last_possession
+                        else:
+                            current_possession = 'None'
+                        
+                        #**** Increment possession count for the team that has the football
+                        if current_possession != 'None':
+                            possession_count[current_possession] += 1
+                            
+                            #**** Update last possession if it's different from the current possession
+                            if last_possession != current_possession:
+                                last_possession = current_possession
+
+
+                        #**** Draw a line from football to the closest player
+                        try:
+                            cv2.line(im0, (int(football_pos[0]), int(football_pos[1])), (int(closest_player_pos[0]), int(closest_player_pos[1])), (255, 0, 0), 2)
+                        except:
+                            cv2.putText(im0, 'No player close to football, taking previous.', (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+                    total_possession = sum(possession_count.values())
+                    if total_possession > 0:
+                        pos_barca = (possession_count['Barca'] / total_possession) * 100
+                        pos_opponent = (possession_count['Opponent'] / total_possession) * 100
+
+                        cv2.putText(im0, f'Barcelona: {pos_barca:.1f}%', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+                        cv2.putText(im0, f'Opponent: {pos_opponent:.1f}%', (im0.shape[1] - 300, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+
+                    #**** Draw a label for the football indicating the team it currently belongs to
+                    if football_pos and closest_player_pos:
+                        label = f'{closest_player_pos[3]}'
+                        color = (255, 0, 0) if closest_player_pos[3] == 'Barca' else (0, 0, 255)
+                        t_size = cv2.getTextSize(label, 0, fontScale=1, thickness=2)[0]
+                        c1 = (int(football_pos[0] - t_size[0] / 2), int(football_pos[1] - t_size[1] / 2))
+                        c2 = (int(football_pos[0] + t_size[0] / 2), int(football_pos[1] + t_size[1] / 2))
+                        # cv2.rectangle(im0, c1, c2, color, -1)  # filled rectangle for background
+                        cv2.putText(im0, label, (c1[0], c1[1] + t_size[1] + 4), 0, 0.5, [225, 255, 255], 2, cv2.LINE_AA)
+
             # Print time (inference + NMS)
             print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
 
