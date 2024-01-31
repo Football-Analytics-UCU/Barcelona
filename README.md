@@ -1,5 +1,10 @@
 # Barcelona
 
+- computer vision part;
+- betting;
+- regressions;
+- some analytics;
+
 
 ## Project Goals
 
