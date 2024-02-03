@@ -120,3 +120,35 @@ Football (Soccer) data scraped from Transfermarkt website
 **ideas**
 - Barcelona over other clubs in Europe and Spanish league (how much foreigners allowed by "club policy")
 - stedium attendance percentage during the season (we have data for that)
+
+***Impact of Unexpected Outcomes on Betting Strategy aka "Betting"***
+
+Goals:
+ - detect how many Barcelona matches ended with “unexpected” results, i.e. result doesn’t match lowest betting odd. 
+ - detect is there profitable long-run betting strategy(period - season), if user always bets against odds.
+ - detect correlation between number of “unexpected” results in season and profit/loss
+Input data: results of LaLiga in seasons 2014/2015 - 2020/2021 from [Football Database dataset](https://www.kaggle.com/datasets/technika148/football-database)
+
+Implementation - [notebooks/unexpected_results.ipynb](notebooks/unexpected_results.ipynb)
+
+At first we analyzed how many matches ended with “unexpected” results.
+
+And we got 3 "better" and 73 "worse" matches. 
+
+After that we analyzed two strategies for betting on unexpected results
+- Linear - betting the same amount every game in season
+- Catch-up strategy - betting amount is calculated by formula: 
+
+S = X+Y/K-1
+
+S - is the stake or the amount of the required bet.
+
+X - is the amount of potential profit from the first bet, minus the stake.
+
+Y - is the sum of all previous losses.
+
+K - is the odds of the upcoming event.
+
+This gives us the following result:
+the linear betting strategy, as expected, resulted in losses in four out of seven seasons. In contrast, the catch-up strategy yielded profits in every season, with its least profitable season still outperforming the best season of the linear strategy by double. Interestingly, basing the betting strategy on 'unexpected' results did not correlate with overall profit. This is likely because profitability is more influenced by the sequence of 'unexpected' matches rather than their total count in a season.
+
