@@ -107,7 +107,10 @@ prediction 0.5 - 0.65 : draw
 prediction > 0.65 : home win , 
 then it will give only 48% of correctly predicted match outcomes . This figure is significantly lower compared to the coefficients of the betting companies. However, this is only an initial model and there's a lot of possible options how to improve it. 
 
-Model 2 : 
+Model 2 : Bradley Terry. 
+In the original Bradley Terry, prediction is based on \lambda _i which is understood as the “strength” of team i. In the original Bradley–Terry formulation, it does not vary with time. However, the approach was used which allowed team strength to be linearly dependent on the set of parameters which can change with time. 
+Modeling was carried out on the same dataset (after convertion to the appropriate format) and the same 8 features. Larger set of features was tested , but its results were rather a noise than a prediction. 
+However, it's results are far from the desired. 
 
 ## Some analytics
 
