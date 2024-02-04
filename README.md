@@ -101,60 +101,23 @@ Draws : excluded from modeling
 
 From the initial set of features, 8 features were selected for final modeling. Methods of features exclusion : correlations > 0.9, information value, features stability.
 
-Model 1 : logistic regression : performance AUC 0.75/0.76 train/oot. It corresponds to 69% of correctly predicted match results in OOT . However, if add draws to this dataset, it's not obvious how to define the match outcome. If define match outcome in the following way : 
+Model 1 : logistic regression : performance AUC 0.75/0.76 train/oot. It corresponds to 69% of correctly predicted match results in OOT . 
+![pic1](https://github.com/Football-Analytics-UCU/Barcelona/assets/13146810/97d355bb-39e0-45fe-888a-a384ee3fce64)
+
+However, if add draws to this dataset, it's not obvious how to define the match outcome. If define match outcome in the following way : 
 prediction < 0.5 : away win 
 prediction 0.5 - 0.65 : draw
 prediction > 0.65 : home win , 
 then it will give only 48% of correctly predicted match outcomes . This figure is significantly lower compared to the coefficients of the betting companies. However, this is only an initial model and there's a lot of possible options how to improve it. 
 
 Model 2 : Bradley Terry. 
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-  <mtable columnalign="right left right left right left right left right left right left" rowspacing="3pt" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true">
-    <mtr>
-      <mtd>
-        <mi>p</mi>
-        <mo stretchy="false">(</mo>
-        <msub>
-          <mi>y</mi>
-          <mrow class="MJX-TeXAtom-ORD">
-            <mi>i</mi>
-            <mi>j</mi>
-            <mi>t</mi>
-          </mrow>
-        </msub>
-        <mo>=</mo>
-        <mn>1</mn>
-        <mo stretchy="false">)</mo>
-        <mo>=</mo>
-        <mfrac>
-          <msub>
-            <mi>&#x03C0;<!-- π --></mi>
-            <mi>i</mi>
-          </msub>
-          <mrow>
-            <msub>
-              <mi>&#x03C0;<!-- π --></mi>
-              <mi>i</mi>
-            </msub>
-            <mo>+</mo>
-            <msub>
-              <mi>&#x03C0;<!-- π --></mi>
-              <mi>j</mi>
-            </msub>
-          </mrow>
-        </mfrac>
-        <mspace width="thinmathspace" />
-        <mo>,</mo>
-      </mtd>
-    </mtr>
-  </mtable>
-</math>
 In the original Bradley Terry, prediction is based on <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msub>
     <mi>&#x03BB;<!-- λ --></mi>
     <mi>i</mi>
   </msub>
-</math> which is understood as the “strength” of team i. In the original Bradley–Terry formulation, it does not vary with time. However, the approach was used which allowed team strength to be linearly dependent on the set of parameters which can change with time. 
+</math> 
+which is understood as the “strength” of team i. In the original Bradley–Terry formulation, it does not vary with time. However, the approach was used which allowed team strength to be linearly dependent on the set of parameters which can change with time. 
 Modeling was carried out on the same dataset (after convertion to the appropriate format) and the same 8 features. Larger set of features was tested , but its results were rather a noise than a prediction. 
 However, it's results are far from the desired. 
 
