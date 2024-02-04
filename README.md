@@ -9,8 +9,8 @@
 
 <h1 align="center">Goal: detecting of ball possesion  in match Barcelona VS Real Madrid</h1>
 
-<img src="yolo7\img\Example.png" alt="result_img">
-<img src="yolo7\img\example_2.png" alt="result_img">
+<img src="yolov7\img\Example.png" alt="result_img">
+<img src="yolov7\img\example_2.png" alt="result_img">
 
 [Video of match Barcelona VS Real Madrid](https://drive.google.com/file/d/1OCz-WSO76S3x9s67sVTQTRpX2Xsltl22/view?usp=drive_link)<br>
 [Video detecting of players](https://drive.google.com/file/d/1ZBJ6kvKmYimA1k17NF7uc55jQCRYUfLH/view?usp=drive_link)
@@ -88,6 +88,7 @@ the linear betting strategy, as expected, resulted in losses in four out of seve
 - some other приколи;
 
 **_ Player connections _**
+
 Tried to identify strong connections between some players
 Used Leuvian method for building communities.
 Results show that players that have more common seasons and games are more likely to be part of the same community. Partitioning of 3 periods (Messi, Puyol, current one)
@@ -105,7 +106,7 @@ Steps:
 2. check out some things
 3. players contribution rate
 
-<img src="data\image3_1.png" alt="result_img">
+<img src="data\image3_1.jpeg" alt="result_img">
 <img src="data\image3_2.jpeg" alt="result_img">
 
 **_ Minutes played and substitute strategies (Xavi) _**
@@ -119,6 +120,8 @@ Steps:
 - positional distribution of incoming academy players (covid?)
 - player performance index
 
-<img src="data\image5_1.png" alt="result_img">
+<img src="data\image5_1.jpeg" alt="result_img">
 <img src="data\image5_2.jpeg" alt="result_img">
-<img src="data\image5_3.png" alt="result_img">
+<img src="data\image5_3.jpeg" />
+
+Implementation - [notebooks/transfrmarket_processing.ipynb](notebooks/transfrmarket_processing.ipynb)
