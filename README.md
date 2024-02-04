@@ -102,8 +102,8 @@ Results show that players that have more common seasons and games are more likel
 
 Potential use-case: analyse game lineups and potential performance
 
-<img src="data/image1.jpeg" alt="result_img">
-<img src="data/image2.jpeg" alt="result_img">
+![image1](data/image1.jpeg)
+![image2](data/image2.jpeg)
 
 **_ Barcelona B -> Barcelona A _**
 
