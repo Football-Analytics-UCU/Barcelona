@@ -2,6 +2,13 @@
 
 ## Team
 
+- Inna Dragota
+- Yurii Kharabara
+- Oleh Bondar
+- Vasyl Dorozhynskyi
+- Yulia (TBD)
+- Dmytro Omelian
+
 <h1 align="center">Computer vision part
 <img src="https://github.com/blackcater/blackcater/raw/main/images/Hi.gif" height="32"/></h1>
 
@@ -37,7 +44,7 @@
 
 If you want to use our model you can add more pictures from defferent matches to your dataset)
 
-**_Impact of Unexpected Outcomes on Betting Strategy aka "Betting"_**
+## Impact of Unexpected Outcomes on Betting Strategy aka "Betting"
 
 <h3 align="center">Vasyl Dorozhynskyi</h3>
 
@@ -72,7 +79,7 @@ K - is the odds of the upcoming event.
 This gives us the following result:
 the linear betting strategy, as expected, resulted in losses in four out of seven seasons. In contrast, the catch-up strategy yielded profits in every season, with its least profitable season still outperforming the best season of the linear strategy by double. Interestingly, basing the betting strategy on 'unexpected' results did not correlate with overall profit. This is likely because profitability is more influenced by the sequence of 'unexpected' matches rather than their total count in a season.
 
-** Some analytics **
+## Some analytics
 
 <h3 align="center">Dmytro Omelian</h3>
 
