@@ -108,6 +108,47 @@ prediction > 0.65 : home win ,
 then it will give only 48% of correctly predicted match outcomes . This figure is significantly lower compared to the coefficients of the betting companies. However, this is only an initial model and there's a lot of possible options how to improve it. 
 
 Model 2 : Bradley Terry. 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mtable columnalign="right left right left right left right left right left right left" rowspacing="3pt" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true">
+    <mtr>
+      <mtd>
+        <mi>p</mi>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mi>i</mi>
+            <mi>j</mi>
+            <mi>t</mi>
+          </mrow>
+        </msub>
+        <mo>=</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mfrac>
+          <msub>
+            <mi>&#x03C0;<!-- π --></mi>
+            <mi>i</mi>
+          </msub>
+          <mrow>
+            <msub>
+              <mi>&#x03C0;<!-- π --></mi>
+              <mi>i</mi>
+            </msub>
+            <mo>+</mo>
+            <msub>
+              <mi>&#x03C0;<!-- π --></mi>
+              <mi>j</mi>
+            </msub>
+          </mrow>
+        </mfrac>
+        <mspace width="thinmathspace" />
+        <mo>,</mo>
+      </mtd>
+    </mtr>
+  </mtable>
+</math>
 In the original Bradley Terry, prediction is based on <math xmlns="http://www.w3.org/1998/Math/MathML">
   <msub>
     <mi>&#x03BB;<!-- λ --></mi>
