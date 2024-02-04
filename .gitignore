@@ -1,14 +1,14 @@
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
 # *.jpg
 # *.jpeg
-*.png
+# *.png
 *.bmp
 *.tif
 *.tiff
 *.heic
-*.JPG
-*.JPEG
-*.PNG
+# *.JPG
+# *.JPEG
+# *.PNG
 *.BMP
 *.TIF
 *.TIFF
@@ -17,7 +17,7 @@
 *.mov
 *.MOV
 *.avi
-*.data
+# *.data
 *.json
 *.cfg
 !setup.cfg
