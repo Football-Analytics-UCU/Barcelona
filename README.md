@@ -46,6 +46,22 @@ If you want to use our model you can add more pictures from defferent matches to
 
 ## Impact of Unexpected Outcomes on Betting Strategy aka "Betting"
 
+<h3 align="center">Oleh Bondar</h3>
+
+Goal:
+Comparison of player statistics between home and away matches
+
+Methodology:
+
+    Data from StatsBomb
+    La Liga matches, 5 seasons from 2016 to 2020
+    Players with more than 25 events for calculating xG, xGA for both home and away games
+    Excluding penalties
+    Comparison using t-test
+    
+<img src='[https://drive.google.com/file/d/1KFSFJRY061zMUNfo1n-_68RXsbQAPDB5/view?usp=drive_link](https://drive.google.com/file/d/10AjB2POESui4gCrivG85eZuA2I4QDE2L/view?usp=sharing)'>
+<img src='[https://drive.google.com/file/d/10AjB2POESui4gCrivG85eZuA2I4QDE2L/view?usp=drive_link)](https://drive.google.com/file/d/1KFSFJRY061zMUNfo1n-_68RXsbQAPDB5/view?usp=sharing)'>
+
 <h3 align="center">Vasyl Dorozhynskyi</h3>
 
 Goals:
