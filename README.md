@@ -102,8 +102,8 @@ Results show that players that have more common seasons and games are more likel
 
 Potential use-case: analyse game lineups and potential performance
 
-![image1](data/image1.jpeg)
-![image2](data/image2.jpeg)
+<img src="images/image1.jpeg" alt="result_img">
+<img src="images/image2.jpeg" alt="result_img">
 
 **_ Barcelona B -> Barcelona A _**
 
@@ -113,12 +113,12 @@ Steps:
 2. check out some things
 3. players contribution rate
 
-<img src="data/image3_1.jpeg" alt="result_img">
-<img src="data/image3_2.jpeg" alt="result_img">
+<img src="images/image3_1.png" alt="result_img">
+<img src="images/image3_2.jpeg" alt="result_img">
 
 **_ Minutes played and substitute strategies (Xavi) _**
 
-<img src="data/image4.jpeg" alt="result_img">
+<img src="images/image4.jpeg" alt="result_img">
 
 **_ Miscellaneous _**
 
@@ -127,8 +127,8 @@ Steps:
 - positional distribution of incoming academy players (covid?)
 - player performance index
 
-<img src="data/image5_1.jpeg" alt="result_img">
-<img src="data/image5_2.jpeg" alt="result_img">
-<img src="data/image5_3.jpeg" />
+<img src="images/image5_1.jpeg" alt="result_img">
+<img src="images/image5_2.jpeg" alt="result_img">
+<img src="images/image5_3.jpeg" />
 
 Implementation - [notebooks/transfrmarket_processing.ipynb](notebooks/transfrmarket_processing.ipynb)
