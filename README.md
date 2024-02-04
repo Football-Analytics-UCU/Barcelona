@@ -83,6 +83,8 @@ the linear betting strategy, as expected, resulted in losses in four out of seve
 
 <h3 align="center">Iuliia Gridneva</h3>
 
+Implementation - [notebooks/unexpected_results.ipynb](notebooks/unexpected_results.ipynb)
+
 Modeling was caarried out in 2 ways : 
 1. Logistic regression
 2. Bradley Terry model from the R-package "BradleyTerry2". Approach for BradleyTerry taken from here : https://link.springer.com/article/10.1007/s10994-018-5741-1
