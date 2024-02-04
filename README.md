@@ -102,13 +102,19 @@ Draws : excluded from modeling
 From the initial set of features, 8 features were selected for final modeling. Methods of features exclusion : correlations > 0.9, information value, features stability.
 
 Model 1 : logistic regression : performance AUC 0.75/0.76 train/oot. It corresponds to 69% of correctly predicted match results in OOT . 
-![pic1](https://github.com/Football-Analytics-UCU/Barcelona/assets/13146810/97d355bb-39e0-45fe-888a-a384ee3fce64)
+![pic1](https://github.com/Football-Analytics-UCU/Barcelona/assets/13146810/9963078f-a4b7-4c34-8f3e-1b3eb2c58897)
+
 
 However, if add draws to this dataset, it's not obvious how to define the match outcome. If define match outcome in the following way : 
 prediction < 0.5 : away win 
 prediction 0.5 - 0.65 : draw
 prediction > 0.65 : home win , 
-then it will give only 48% of correctly predicted match outcomes . This figure is significantly lower compared to the coefficients of the betting companies. However, this is only an initial model and there's a lot of possible options how to improve it. 
+then it will give only 48% of correctly predicted match outcomes . 
+
+![pic2](https://github.com/Football-Analytics-UCU/Barcelona/assets/13146810/f94562cc-a5c3-427d-8639-4cd6e9e4f37c)
+
+
+This figure is significantly lower compared to the coefficients of the betting companies. However, this is only an initial model and there's a lot of possible options how to improve it. 
 
 Model 2 : Bradley Terry. 
 In the original Bradley Terry, prediction is based on <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -119,6 +125,10 @@ In the original Bradley Terry, prediction is based on <math xmlns="http://www.w3
 </math> 
 which is understood as the “strength” of team i. In the original Bradley–Terry formulation, it does not vary with time. However, the approach was used which allowed team strength to be linearly dependent on the set of parameters which can change with time. 
 Modeling was carried out on the same dataset (after convertion to the appropriate format) and the same 8 features. Larger set of features was tested , but its results were rather a noise than a prediction. 
+
+![pic3](https://github.com/Football-Analytics-UCU/Barcelona/assets/13146810/bb883889-4d9b-4c46-9513-e2846e3cfd1d)
+
+
 However, it's results are far from the desired. 
 
 ## Some analytics
