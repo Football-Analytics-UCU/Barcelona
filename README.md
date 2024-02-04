@@ -6,7 +6,7 @@
 - Yurii Kharabara
 - Oleh Bondar
 - Vasyl Dorozhynskyi
-- Yulia (TBD)
+- Iuliia Gridneva
 - Dmytro Omelian
 
 <h1 align="center">Computer vision part
