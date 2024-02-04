@@ -79,6 +79,14 @@ K - is the odds of the upcoming event.
 This gives us the following result:
 the linear betting strategy, as expected, resulted in losses in four out of seven seasons. In contrast, the catch-up strategy yielded profits in every season, with its least profitable season still outperforming the best season of the linear strategy by double. Interestingly, basing the betting strategy on 'unexpected' results did not correlate with overall profit. This is likely because profitability is more influenced by the sequence of 'unexpected' matches rather than their total count in a season.
 
+## Modeling of the match results 
+
+<h3 align="center">Iuliia Gridneva</h3>
+
+Modeling was caarried out in 2 ways : 
+1. Logistic regression
+2. Bradley Terry model from the R-package "BradleyTerry2"
+
 ## Some analytics
 
 <h3 align="center">Dmytro Omelian</h3>
