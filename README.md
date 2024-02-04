@@ -85,7 +85,27 @@ the linear betting strategy, as expected, resulted in losses in four out of seve
 
 Modeling was caarried out in 2 ways : 
 1. Logistic regression
-2. Bradley Terry model from the R-package "BradleyTerry2"
+2. Bradley Terry model from the R-package "BradleyTerry2". Approach for BradleyTerry taken from here : https://link.springer.com/article/10.1007/s10994-018-5741-1
+
+For both models, the same dataset was used. 
+The initial data was taken from https://www.kaggle.com/datasets/technika148/football-database and covers seasons 2014-2020 in 5 leagues : Premier League, Serie A, Bundesliga, La Liga (Spain) and Ligue 1. 
+
+Initially it was attempted to train model on LaLiga only; however, the dataset size proved to be insufficient for any reliable results. Therefore, all 5 leagues were used for training, seasons 2019-2020. The rest of the seasosn was used to generate model features. Overall, 36 features were created covering history of goals, wins, corners, yellow/red cards, etc. No playesr data was introduced into the models since there was no appropriate vocabulary how to relate players to teams in respective seasons. Future steps would include finding such dictionary ; player-related features should be the core of such modeling. 
+
+Dataset size : 1.8K / 0.9K train/oot
+OOT was defined as season == 2020 & gameID > 14950 (which corresponds to the sufficient number of the latest observations ; since the dataset is itself small, such OOT happened to be ~1/3 of it, but smaller dataset could distort the evaluation result) 
+Target : match winning
+Draws : excluded from modeling 
+
+From the initial set of features, 8 features were selected for final modeling. Methods of features exclusion : correlations > 0.9, information value, features stability.
+
+Model 1 : logistic regression : performance AUC 0.75/0.76 train/oot. It corresponds to 69% of correctly predicted match results in OOT . However, if add draws to this dataset, it's not obvious how to define the match outcome. If define match outcome in the following way : 
+prediction < 0.5 : away win 
+prediction 0.5 - 0.65 : draw
+prediction > 0.65 : home win , 
+then it will give only 48% of correctly predicted match outcomes . This figure is significantly lower compared to the coefficients of the betting companies. However, this is only an initial model and there's a lot of possible options how to improve it. 
+
+Model 2 : 
 
 ## Some analytics
 
