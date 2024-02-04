@@ -113,7 +113,7 @@ Steps:
 2. check out some things
 3. players contribution rate
 
-<img src="images/image3_1.png" alt="result_img">
+<img src="images/image3_1.jpg" alt="result_img">
 <img src="images/image3_2.jpeg" alt="result_img">
 
 **_ Minutes played and substitute strategies (Xavi) _**
