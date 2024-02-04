@@ -83,7 +83,7 @@ the linear betting strategy, as expected, resulted in losses in four out of seve
 
 <h3 align="center">Iuliia Gridneva</h3>
 
-Implementation - [notebooks/unexpected_results.ipynb](notebooks/unexpected_results.ipynb)
+Implementation - https://github.com/Football-Analytics-UCU/Barcelona/tree/main/Modeling
 
 Modeling was caarried out in 2 ways : 
 1. Logistic regression
