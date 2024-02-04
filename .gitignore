@@ -25,7 +25,7 @@
 
 storage.googleapis.com
 yolov7/runs/train
-data/*
+# data/*
 data/images/*
 !data/*.yaml
 !data/hyps
